@@ -1,0 +1,42 @@
+[project]
+name = "pulse"
+version = "0.1.0"
+description = "Marketplace decision intelligence: a deterministic decision engine with evidence-bounded AI narration, over synthetic data."
+readme = "README.md"
+authors = [
+    { name = "Daniel Souza Valerio" }
+]
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=1.5.0",
+    "duckdb>=1.5.5",
+    "numpy>=2.5.3",
+    "pandas>=3.0.5",
+    "plotly>=7.0.0",
+    "pyarrow>=25.0.1",
+    "python-dotenv>=1.2.3",
+    "pyyaml>=6.0.3",
+    "scipy>=1.18.1",
+    "streamlit>=1.63.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.5,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.uv]
+package = true
+
+[project.scripts]
+pulse = "pulse.cli:main"

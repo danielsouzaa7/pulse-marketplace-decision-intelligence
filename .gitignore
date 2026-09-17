@@ -1,0 +1,14 @@
+data/bronze/
+data/silver/
+data/gold/
+data/ground_truth/
+artifacts/
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+.remember/
+.semgrep/

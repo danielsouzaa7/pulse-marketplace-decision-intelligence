@@ -1,0 +1,181 @@
+# Deterministic recommendation playbook: diagnosis.pattern -> Recommendation.
+# Pure data -- pulse/playbook.py loads this file at import and looks a key up
+# by diagnosis.pattern alone. Adding a pattern (Task 16, Task 18) is an edit
+# to this file: a new top-level key here, plus a matching entry in
+# root_cause.PATTERNS, never a branch in playbook.py. playbook.PATTERNS is
+# derived from this file's own keys, so a new entry extends it automatically.
+#
+# KEYS AND IDENTIFIERS ARE ENGLISH; THE PROSE IS BRAZILIAN PORTUGUESE. The
+# analyst reads action/rationale/expected_effect/validation_method, so those
+# four fields are pt-BR. Everything the engine keys on -- the pattern names,
+# the {token} whitelist, metric identifiers, owner_function, effort -- stays
+# exactly as the engine writes it, because those are looked up, not read.
+#
+# ONLY REACHABLE PATTERNS ARE WRITTEN DOWN. An entry for a pattern no
+# diagnostic code can emit is unverifiable theatre, so each one below was added
+# only after the engine was observed producing its (funnel_break_stage,
+# classification driver) signature on the real gold tables:
+#
+#   fulfillment_eta_degradation  (completion_rate, {one of the three fulfilment
+#                                 drivers}) -- fires on zone 7 GMV and on
+#                                 company completion_rate.
+#   supply_availability_gap      (availability_rate, None) -- fires on zone 4
+#                                 once Task 18 registered availability_rate,
+#                                 at z = -6.58 / -5.69%. The None half is a
+#                                 measurement, not a gap: all three fulfilment
+#                                 candidates come out weak there (|r|
+#                                 0.13-0.16), so nothing upstream moved with
+#                                 it, which is what separates a supply-side
+#                                 gap from a delivery one.
+#   unknown_pattern              the explicit fallback for everything else --
+#                                 on this dataset 8 of 12 diagnosed anomalies,
+#                                 mostly because rate and duration metrics get
+#                                 no segment decomposition and no funnel split,
+#                                 by design, since the funnel identity is about
+#                                 GMV. It is the MAJORITY case, so its text is
+#                                 real analytical guidance -- what was observed
+#                                 and what to do next to classify it -- never a
+#                                 stub apology.
+#
+# Promotion-margin and retention entries were investigated in Task 18 and are
+# deliberately still absent: neither scope reaches the detector at all (the
+# promotion carrying the injected margin incident runs 21 days and fires on no
+# metric in its own gold table; gold_customer_retention has no daily grain for
+# a detector to scan). Writing entries for them would be a claim the engine
+# cannot back.
+#
+# Every field is advisory text for a human to approve; nothing here is an
+# instruction the system carries out itself. Language rules, enforced by
+# tests in tests/test_playbook.py in BOTH languages:
+#   * association, never causation -- "fator associado", "evidência
+#     consistente com", never "causado por" / "por causa de" / "devido a" /
+#     "provou".
+#   * impact estimates are a conservative FLOOR, not an exact number -- the
+#     56-day baseline is itself partly contaminated by the incident (17 of
+#     its days are already degraded on the zone-7 case), so every estimate
+#     UNDERSTATES the true effect. Worded with "estimado" and "no mínimo".
+#   * no single driver is named as THE cause -- the three fulfilment drivers
+#     cluster within |r| 0.401-0.448, a spread too narrow to rank with any
+#     confidence, so they are described as a family that deteriorated
+#     together, never as "the driver".
+#
+# Fields, all consumed by pulse.playbook.recommend() into a Recommendation:
+#   action            -- str.format template: what to investigate/propose.
+#                         Deliberately references no diagnosis-specific
+#                         token (no {segment}, no driver name): selection AND
+#                         phrasing are keyed on diagnosis.pattern alone, so
+#                         the same pattern always recommends the same action
+#                         regardless of which zone, merchant category or
+#                         channel it fired on. Scope-specific detail lives in
+#                         rationale/expected_effect instead.
+#   rationale         -- str.format template: what the evidence shows.
+#   expected_effect   -- str.format template: conservative, quantified where
+#                         the impact estimate supports it.
+#   validation_method -- str.format template: a real experimental design --
+#                         a named primary metric, a comparison/control group,
+#                         and a stated window. Translated as a DESIGN, never
+#                         softened into a vague suggestion.
+#   owner_function    -- plain string, not templated. An org function the
+#                         engine and the app both key on: not translated.
+#   effort            -- plain string, not templated.
+#
+# Template placeholders are whitelisted by render_context() in playbook.py:
+# segment, metric, deviation_pct, concentration, drivers_list, driver_note,
+# confidence_pct, gmv_at_risk. Any other token raises KeyError at render
+# time rather than leaking a literal "{token}" into an analyst-facing memo.
+
+fulfillment_eta_degradation:
+  action: >
+    Encaminhar para Operações/Logística para avaliação: propor uma realocação
+    temporária da oferta de entregadores e uma flexibilização dos limites de
+    raio de entrega no segmento afetado até que a taxa de conclusão se
+    recupere em direção à baseline. Esta é uma proposta para o líder de
+    operações de plantão aprovar, não uma ação automatizada.
+  rationale: >
+    Em {segment}, a taxa de conclusão é o estágio do funil que se rompeu
+    enquanto os demais estágios se mantiveram próximos da baseline
+    ({concentration}). As métricas de entrega se deterioraram em conjunto com
+    ela nesta janela -- {drivers_list} -- e ficam agrupadas de forma estreita
+    em força de correlação, evidência consistente com uma limitação de
+    capacidade ou roteirização na entrega, e não com uma mudança de demanda.
+    Confiança do diagnóstico: {confidence_pct}.
+  expected_effect: >
+    Se a taxa de conclusão em {segment} retornar ao seu nível de baseline, o
+    GMV recuperável estimado ali é de no mínimo {gmv_at_risk} nos próximos 30
+    dias. A própria baseline de comparação se sobrepõe a parte da janela do
+    incidente, portanto este é um piso conservador sobre o impacto associado,
+    e não a estimativa completa.
+  validation_method: >
+    Diferenças em diferenças em nível de zona: tratar {segment} como grupo de
+    tratamento e, como controle, segmentos comparáveis sem anomalia de taxa de
+    conclusão no mesmo período; métrica primária completion_rate, métrica de
+    guarda custo de entrega por pedido, medidas em uma janela de 14 dias
+    pós-intervenção contra os 14 dias pré-intervenção.
+  owner_function: Operations / Logistics
+  effort: medium
+
+supply_availability_gap:
+  action: >
+    Encaminhar para Supply do Marketplace / Operações de Merchants para
+    avaliação: propor uma auditoria dos merchants com abertura programada no
+    segmento afetado nas horas em que a falta aparece, separando mudanças de
+    status de loja, falta de pessoal e quedas de POS/integração, e propor
+    cobertura reserva temporária a partir de merchants que já atendem esse
+    segmento enquanto a falta estiver aberta. Esta é uma proposta para o líder
+    de supply aprovar, não uma ação automatizada.
+  rationale: >
+    {metric} -- a parcela das horas de abertura programada dos merchants em
+    que eles estavam de fato disponíveis para pedido -- moveu {deviation_pct}
+    em {segment}; {concentration}. {driver_note} Nenhuma série de entrega
+    neste segmento se moveu junto com ela, evidência consistente com oferta
+    saindo do ar antes do checkout, e não com um problema de entrega depois
+    dele. A falta é reportada no roll-up do segmento porque uma série por
+    merchant não é escaneável: cada merchant fecha em um dia fixo da semana,
+    então um dia da semana inteiro da sua série está ausente e a baseline
+    daquele dia da semana não existe. Confiança do diagnóstico:
+    {confidence_pct}.
+  expected_effect: >
+    As sessões que chegaram em {segment} se mantiveram próximas da baseline
+    enquanto a oferta disponível para pedido não, então o GMV estimado
+    associado à demanda não atendida é de no mínimo {gmv_at_risk} nos próximos
+    30 dias se a falta persistir. A baseline de comparação já se sobrepõe a
+    parte da falta, portanto trate este valor como um piso conservador e não
+    como a estimativa completa.
+  validation_method: >
+    Restaurar a cobertura apenas em {segment} e comparar contra segmentos sem
+    anomalia de disponibilidade no mesmo período como grupo de controle:
+    métrica primária availability_rate, métrica secundária order_conversion,
+    métricas de guarda cancellation_rate e custo de entrega por pedido, de
+    modo que a cobertura reserva não compre disponibilidade degradando a
+    entrega. Medir em uma janela de 14 dias pós-intervenção contra os 14 dias
+    pré-intervenção e ler o resultado como associação, já que quais merchants
+    recuperam cobertura primeiro não é randomizado.
+  owner_function: Marketplace Supply / Merchant Operations
+  effort: medium
+
+unknown_pattern:
+  action: >
+    Investigue manualmente antes de atribuir um playbook: encaminhe esta
+    assinatura para Analytics para classificação e segure qualquer correção
+    operacional até que ela esteja catalogada. Não aplique uma recomendação
+    padronizada a um padrão ainda não classificado.
+  rationale: >
+    {metric} desviou {deviation_pct} em {segment} ({concentration}).
+    {driver_note} Esta combinação de estágio rompido e fatores associados
+    ainda não está catalogada no playbook, portanto nenhuma recomendação
+    determinística se aplica. O que já está medido é o desvio acima e a
+    concentração ao lado dele; o que falta é a classificação. Confiança do
+    diagnóstico: {confidence_pct}.
+  expected_effect: >
+    Ainda não quantificável contra um padrão conhecido. O GMV estimado em
+    risco caso este desvio persista é de no mínimo {gmv_at_risk} nos próximos
+    30 dias -- trate esse valor como um piso para priorização, e não como um
+    custo assumido.
+  validation_method: >
+    Antes de agir: nomeie {metric} como métrica primária, escolha como
+    controle um grupo de comparação de segmentos da mesma dimensão sem
+    anomalia nesta métrica e volte a medir em uma janela de 14 dias com uma
+    métrica de guarda declarada. Não rode um experimento operacional sem esse
+    desenho definido.
+  owner_function: Analytics
+  effort: unknown
