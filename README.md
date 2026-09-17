@@ -1,5 +1,8 @@
 ﻿# PULSE — Marketplace Decision Intelligence
 
+> [!NOTE]
+> 🚧 **Status: em construção / under construction.** PULSE is built incrementally. This README distinguishes what is implemented from what is not — see *At a glance* and *Limitations*. There is no production deployment.
+
 **PULSE is a decision-intelligence engine for marketplaces: it detects a business
 change, explains where it sits and what moved with it, estimates how much it is
 worth, ranks it against everything else that fired, writes a Decision Memo a named
