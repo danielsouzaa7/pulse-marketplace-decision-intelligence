@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-labelledby="t d">
+  <title id="t">Pulse — Marketplace Decision Intelligence</title>
+  <desc id="d">A média da empresa permanece dentro da faixa esperada enquanto a zona 7 sai dela. O motor varre as séries, marca a anomalia e ordena as prioridades: zona 7, toda a empresa, zona 4. O modelo de linguagem recebe apenas a evidência e narra; quem decide é o motor. Dados sintéticos.</desc>
+  <style>
+    .f { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    .brand { font-size: 24px; font-weight: 700; fill: #E6EDF7; letter-spacing: -.3px; }
+    .rule  { font-size: 18px; font-weight: 500; fill: #9FB0C8; }
+    .chip  { font-size: 19px; font-weight: 600; fill: #E6EDF7; }
+    .num   { font-size: 19px; font-weight: 700; fill: #4C7DFF; }
+    .small { font-size: 15px; fill: #6F83A3; }
+    .leg   { font-size: 17px; fill: #9FB0C8; }
+    .llm   { font-size: 18px; font-weight: 600; fill: #D2B8FF; }
+    .alert { font-size: 17px; font-weight: 600; fill: #F85149; }
+
+    .anim { animation-duration: 10s; animation-iteration-count: infinite; animation-timing-function: linear; }
+    .ping { transform-box: fill-box; transform-origin: center; }
+    .cover   { animation-name: cover; }
+    .scan    { animation-name: scan; }
+    .lines   { animation-name: lines; }
+    .mark    { animation-name: mark; }
+    .markp   { animation-name: markp; }
+    .c1 { animation-name: c1; } .c2 { animation-name: c2; } .c3 { animation-name: c3; }
+    .ev  { animation-name: ev; }
+    .box { animation-name: box; }
+
+    /* a varredura revela as séries: o motor olha toda métrica em todo escopo */
+    @keyframes cover { 0% { transform: translateX(0); opacity: 1; } 42% { transform: translateX(424px); opacity: 1; } 42.1%, 100% { transform: translateX(424px); opacity: 0; } }
+    @keyframes scan  { 0% { transform: translateX(0); opacity: 1; } 42% { transform: translateX(420px); opacity: 1; } 44%, 100% { transform: translateX(420px); opacity: 0; } }
+    @keyframes lines { 0%, 94% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes mark  { 0%, 35.9% { opacity: 0; } 36%, 94% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes markp { 0%, 35.9% { opacity: 0; transform: scale(1); } 36% { opacity: .9; transform: scale(1); } 46%, 100% { opacity: 0; transform: scale(3); } }
+    @keyframes c1 { 0%, 45.9% { opacity: 0; transform: translateY(8px); } 48%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
+    @keyframes c2 { 0%, 49.9% { opacity: 0; transform: translateY(8px); } 52%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
+    @keyframes c3 { 0%, 53.9% { opacity: 0; transform: translateY(8px); } 56%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
+    @keyframes ev  { 0%, 61.9% { opacity: 0; stroke-dashoffset: 0; } 62% { opacity: 1; } 94% { opacity: 1; stroke-dashoffset: -60; } 100% { opacity: 0; stroke-dashoffset: -64; } }
+    @keyframes box { 0%, 65.9% { opacity: 0; } 68%, 94% { opacity: 1; } 100% { opacity: 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { animation: none !important; }
+      .moving { display: none; }
+    }
+  </style>
+
+  <defs>
+    <clipPath id="chart"><rect x="30" y="80" width="432" height="184"/></clipPath>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="759" height="329" rx="18" fill="#0B1220" stroke="#1E2A40"/>
+
+  <!-- cabeçalho -->
+  <path d="M40 33 L50 43 L40 53 L30 43 Z" fill="#4C7DFF"/>
+  <text class="f brand" x="60" y="52">Pulse</text>
+  <text class="f rule" x="724" y="51" text-anchor="end">O motor decide. O LLM narra.</text>
+
+  <!-- séries (sintéticas) -->
+  <g class="anim lines" fill="none" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+    <path stroke="#5B6B86" d="M36 158 L66 154 L96 161 L126 156 L156 163 L186 158 L216 162 L246 157 L276 165 L306 161 L336 166 L366 163 L396 169 L426 166 L456 171"/>
+    <path stroke="#E6EDF7" d="M36 146 L66 142 L96 149 L126 144 L156 151 L186 146 L216 152 L246 148 L276 156 L306 164"/>
+    <path stroke="#F85149" d="M306 164 L336 183 L366 199 L396 214 L426 223 L456 231"/>
+  </g>
+
+  <!-- a varredura cobre e revela as séries -->
+  <g clip-path="url(#chart)" class="moving">
+    <rect class="anim cover" x="36" y="80" width="426" height="184" fill="#0B1220" opacity="0"/>
+  </g>
+
+  <!-- faixa esperada (linha de base ± limiar) -->
+  <rect x="36" y="128" width="420" height="64" fill="#4C7DFF" fill-opacity=".08"/>
+  <g stroke="#4C7DFF" stroke-opacity=".4" stroke-dasharray="4 5">
+    <line x1="36" y1="128" x2="456" y2="128"/>
+    <line x1="36" y1="192" x2="456" y2="192"/>
+  </g>
+  <text class="f small" x="40" y="118">faixa esperada</text>
+
+  <g class="moving">
+    <line class="anim scan" x1="36" y1="84" x2="36" y2="258" stroke="#4C7DFF" stroke-width="2" opacity="0"/>
+  </g>
+
+  <!-- anomalia: a zona 7 sai da faixa que a média nunca deixa -->
+  <g class="anim mark">
+    <circle cx="396" cy="214" r="6" fill="#F85149"/>
+    <circle cx="396" cy="214" r="12" fill="none" stroke="#F85149" stroke-width="2"/>
+    <text class="f alert" x="380" y="248" text-anchor="end">anomalia</text>
+  </g>
+  <circle class="anim markp ping moving" cx="396" cy="214" r="12" fill="none" stroke="#F85149" stroke-width="2" opacity="0"/>
+
+  <!-- prioridades, na ordem do motor -->
+  <g class="anim c1">
+    <rect x="492" y="86" width="232" height="42" rx="10" fill="#131C2E" stroke="#4C7DFF" stroke-width="1.5"/>
+    <text class="f num" x="512" y="114">1</text><text class="f chip" x="538" y="114">Zona 7</text>
+  </g>
+  <g class="anim c2">
+    <rect x="492" y="138" width="232" height="42" rx="10" fill="#131C2E" stroke="#25324A" stroke-width="1.5"/>
+    <text class="f num" x="512" y="166">2</text><text class="f chip" x="538" y="166">Toda a empresa</text>
+  </g>
+  <g class="anim c3">
+    <rect x="492" y="190" width="232" height="42" rx="10" fill="#131C2E" stroke="#25324A" stroke-width="1.5"/>
+    <text class="f num" x="512" y="218">3</text><text class="f chip" x="538" y="218">Zona 4</text>
+  </g>
+
+  <!-- só a evidência atravessa a fronteira até o modelo -->
+  <line class="anim ev" x1="608" y1="232" x2="608" y2="256" stroke="#A371F7" stroke-width="2" stroke-dasharray="4 4"/>
+  <g class="anim box">
+    <rect x="492" y="256" width="232" height="46" rx="10" fill="#141026" stroke="#A371F7" stroke-width="1.5" stroke-dasharray="5 5"/>
+    <text class="f llm" x="608" y="285" text-anchor="middle">LLM narra a evidência</text>
+  </g>
+
+  <!-- legenda -->
+  <line x1="36" y1="296" x2="58" y2="296" stroke="#5B6B86" stroke-width="3" stroke-linecap="round"/>
+  <text class="f leg" x="66" y="302">média da empresa</text>
+  <line x1="236" y1="296" x2="258" y2="296" stroke="#E6EDF7" stroke-width="3" stroke-linecap="round"/>
+  <text class="f leg" x="266" y="302">zona 7</text>
+  <text class="f small" x="456" y="302" text-anchor="end">dados sintéticos</text>
+</svg>

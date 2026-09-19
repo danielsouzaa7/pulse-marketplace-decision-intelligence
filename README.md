@@ -1,7 +1,37 @@
-﻿# PULSE — Marketplace Decision Intelligence
+﻿<img src="docs/assets/pulse.svg" width="100%" alt="Pulse: a média da empresa fica dentro da faixa esperada enquanto a zona 7 sai dela; o motor marca a anomalia e ordena as prioridades, e o LLM recebe apenas a evidência para narrar.">
+
+# PULSE — Marketplace Decision Intelligence
 
 > [!NOTE]
 > 🚧 **Status: em construção / under construction.** PULSE is built incrementally. This README distinguishes what is implemented from what is not — see *At a glance* and *Limitations*. There is no production deployment.
+
+**Motor de inteligência de decisão para marketplaces:** encontra a mudança que importa, mostra onde ela está e o que se moveu junto, estima quanto vale, ordena tudo o que disparou e escreve um memorando de decisão que uma pessoa aprova — e, quando existe um experimento aleatorizado, diz se a intervenção funcionou.
+
+> **Todos os dados são sintéticos.** O projeto nasce de experiência real com operações digitais e marketplaces, mas não contém dado de nenhuma empresa, cliente ou consumidor real.
+
+## Visão geral
+
+- **Problema.** Um marketplace emite sinais por zona, por métrica e por etapa do funil todos os dias. Na média, a zona que está falhando desaparece; vistos um a um, os sinais são demais para agir.
+- **O que o Pulse faz.** `DADOS → DETECÇÃO → DIAGNÓSTICO → IMPACTO → PRIORIDADE → EVIDÊNCIA → NARRAÇÃO`
+- **Princípio: o motor decide, o LLM narra.** Métricas, anomalias, pontuações, a ordem das prioridades e as recomendações saem de funções determinísticas. O modelo de linguagem recebe só um pacote limitado de evidência estruturada e escreve texto sobre ele; um validador por padrões sinaliza números que não se ligam à evidência e frases que afirmam causa.
+- **Funciona sem chave de API.** Sem chave, o Copilot responde a partir de um template determinístico, rotulado como não sendo saída de IA.
+
+**Em números**
+
+- **656 testes:** 655 passam e 1 é pulado — a reconciliação com Databricks, que exige um workspace real.
+- **1,17 milhão de linhas sintéticas** em camadas Bronze, Silver e Gold, com SQL em DuckDB.
+- **Sem machine learning:** a detecção usa linha de base ajustada por dia da semana e z-score.
+- **Não incluído:** nenhum artefato de Power BI; o script PySpark/Databricks foi escrito, mas nunca executado.
+
+**Stack:** Python 3.12 · pandas · DuckDB · Parquet · SciPy · Streamlit · Plotly · Anthropic SDK · pytest (uv)
+
+![Pulse — página Inteligência para Decisão: janela de comparação, sinal agregado da empresa e as três prioridades do motor](dashboard/screenshots/01-decision-intelligence.png)
+
+O restante deste README é a documentação técnica completa, em inglês: arquitetura, pipeline, motor de decisão, experimentos, a fronteira do Copilot, testes e limitações.
+
+---
+
+## Technical documentation
 
 **PULSE is a decision-intelligence engine for marketplaces: it detects a business
 change, explains where it sits and what moved with it, estimates how much it is
@@ -51,8 +81,6 @@ divergence; it never presents an answer as certified. See
 | **Tests** | 656 tests: 655 passed, 1 skipped (the Databricks reconciliation, which needs a real workspace) |
 | **Runs without an API key** | Yes — the Copilot then answers from a deterministic template, labelled as not AI output |
 | **Not included** | No Power BI artifact. The PySpark/Databricks script is written but has never been executed |
-
-![PULSE — Decision Intelligence page](dashboard/screenshots/01-decision-intelligence.png)
 
 ### Quick start
 
