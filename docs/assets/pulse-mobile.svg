@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 476" width="400" height="476" role="img" aria-labelledby="t d">
+  <title id="t">Pulse — Marketplace Decision Intelligence</title>
+  <desc id="d">A média da empresa permanece dentro da faixa esperada enquanto a zona 7 sai dela. O motor varre as séries, marca a anomalia e ordena as prioridades: zona 7, toda a empresa, zona 4. O modelo de linguagem recebe apenas a evidência e narra. Dados sintéticos.</desc>
+  <style>
+    .f { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    .brand { font-size: 22px; font-weight: 700; fill: #E6EDF7; }
+    .rule  { font-size: 17px; font-weight: 500; fill: #9FB0C8; }
+    .chip  { font-size: 18px; font-weight: 600; fill: #E6EDF7; }
+    .num   { font-size: 18px; font-weight: 700; fill: #4C7DFF; }
+    .small { font-size: 14px; fill: #6F83A3; }
+    .leg   { font-size: 15px; fill: #9FB0C8; }
+    .llm   { font-size: 17px; font-weight: 600; fill: #D2B8FF; }
+    .alert { font-size: 16px; font-weight: 600; fill: #F85149; }
+
+    .anim { animation-duration: 10s; animation-iteration-count: infinite; animation-timing-function: linear; }
+    .ping { transform-box: fill-box; transform-origin: center; }
+    .cover { animation-name: cover; } .scan { animation-name: scan; } .lines { animation-name: lines; }
+    .mark { animation-name: mark; } .markp { animation-name: markp; }
+    .c1 { animation-name: c1; } .c2 { animation-name: c2; } .c3 { animation-name: c3; }
+    .ev { animation-name: ev; } .box { animation-name: box; }
+
+    @keyframes cover { 0% { transform: translateX(0); opacity: 1; } 42% { transform: translateX(356px); opacity: 1; } 42.1%, 100% { transform: translateX(356px); opacity: 0; } }
+    @keyframes scan  { 0% { transform: translateX(0); opacity: 1; } 42% { transform: translateX(352px); opacity: 1; } 44%, 100% { transform: translateX(352px); opacity: 0; } }
+    @keyframes lines { 0%, 94% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes mark  { 0%, 37.9% { opacity: 0; } 38%, 94% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes markp { 0%, 37.9% { opacity: 0; transform: scale(1); } 38% { opacity: .9; transform: scale(1); } 47%, 100% { opacity: 0; transform: scale(3); } }
+    @keyframes c1 { 0%, 45.9% { opacity: 0; transform: translateY(8px); } 48%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
+    @keyframes c2 { 0%, 49.9% { opacity: 0; transform: translateY(8px); } 52%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
+    @keyframes c3 { 0%, 53.9% { opacity: 0; transform: translateY(8px); } 56%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
+    @keyframes ev  { 0%, 61.9% { opacity: 0; } 62%, 94% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes box { 0%, 65.9% { opacity: 0; } 68%, 94% { opacity: 1; } 100% { opacity: 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { animation: none !important; }
+      .moving { display: none; }
+    }
+  </style>
+  <defs><clipPath id="chart"><rect x="20" y="90" width="362" height="150"/></clipPath></defs>
+
+  <rect x="0.5" y="0.5" width="399" height="475" rx="16" fill="#0B1220" stroke="#1E2A40"/>
+
+  <path d="M28 27 L37 36 L28 45 L19 36 Z" fill="#4C7DFF"/>
+  <text class="f brand" x="46" y="44">Pulse</text>
+  <text class="f rule" x="24" y="76">O motor decide. O LLM narra.</text>
+
+  <g class="anim lines" fill="none" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+    <path stroke="#5B6B86" d="M24 156 L56 152 L88 159 L120 154 L152 161 L184 156 L216 160 L248 157 L280 163 L312 160 L344 166 L376 168"/>
+    <path stroke="#E6EDF7" d="M24 144 L56 140 L88 147 L120 142 L152 149 L184 144 L216 150 L248 158"/>
+    <path stroke="#F85149" d="M248 158 L280 176 L312 193 L344 207 L376 215"/>
+  </g>
+  <g clip-path="url(#chart)" class="moving">
+    <rect class="anim cover" x="24" y="90" width="358" height="150" fill="#0B1220" opacity="0"/>
+  </g>
+
+  <rect x="24" y="130" width="352" height="50" fill="#4C7DFF" fill-opacity=".08"/>
+  <g stroke="#4C7DFF" stroke-opacity=".4" stroke-dasharray="4 5">
+    <line x1="24" y1="130" x2="376" y2="130"/><line x1="24" y1="180" x2="376" y2="180"/>
+  </g>
+  <text class="f small" x="26" y="121">faixa esperada</text>
+
+  <g class="moving">
+    <line class="anim scan" x1="24" y1="94" x2="24" y2="236" stroke="#4C7DFF" stroke-width="2" opacity="0"/>
+  </g>
+
+  <g class="anim mark">
+    <circle cx="344" cy="207" r="5.5" fill="#F85149"/>
+    <circle cx="344" cy="207" r="11" fill="none" stroke="#F85149" stroke-width="2"/>
+    <text class="f alert" x="326" y="232" text-anchor="end">anomalia</text>
+  </g>
+  <circle class="anim markp ping moving" cx="344" cy="207" r="11" fill="none" stroke="#F85149" stroke-width="2" opacity="0"/>
+
+  <line x1="24" y1="262" x2="42" y2="262" stroke="#5B6B86" stroke-width="3" stroke-linecap="round"/>
+  <text class="f leg" x="48" y="267">média da empresa</text>
+  <line x1="190" y1="262" x2="208" y2="262" stroke="#E6EDF7" stroke-width="3" stroke-linecap="round"/>
+  <text class="f leg" x="214" y="267">zona 7</text>
+  <text class="f small" x="376" y="267" text-anchor="end">dados sintéticos</text>
+
+  <g class="anim c1">
+    <rect x="24" y="288" width="352" height="38" rx="9" fill="#131C2E" stroke="#4C7DFF" stroke-width="1.5"/>
+    <text class="f num" x="42" y="313">1</text><text class="f chip" x="66" y="313">Zona 7</text>
+  </g>
+  <g class="anim c2">
+    <rect x="24" y="334" width="352" height="38" rx="9" fill="#131C2E" stroke="#25324A" stroke-width="1.5"/>
+    <text class="f num" x="42" y="359">2</text><text class="f chip" x="66" y="359">Toda a empresa</text>
+  </g>
+  <g class="anim c3">
+    <rect x="24" y="380" width="352" height="38" rx="9" fill="#131C2E" stroke="#25324A" stroke-width="1.5"/>
+    <text class="f num" x="42" y="405">3</text><text class="f chip" x="66" y="405">Zona 4</text>
+  </g>
+
+  <line class="anim ev" x1="200" y1="418" x2="200" y2="430" stroke="#A371F7" stroke-width="2" stroke-dasharray="3 3"/>
+  <g class="anim box">
+    <rect x="24" y="430" width="352" height="34" rx="9" fill="#141026" stroke="#A371F7" stroke-width="1.5" stroke-dasharray="5 5"/>
+    <text class="f llm" x="200" y="453" text-anchor="middle">LLM narra a evidência</text>
+  </g>
+</svg>
