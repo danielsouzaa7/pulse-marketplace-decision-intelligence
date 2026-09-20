@@ -1,4 +1,4 @@
-﻿<picture><source media="(max-width: 600px)" srcset="https://github.com/danielsouzaa7/pulse-marketplace-decision-intelligence/raw/main/docs/assets/pulse-mobile.svg"><img src="docs/assets/pulse.svg" width="100%" alt="Pulse: a média da empresa fica dentro da faixa esperada enquanto a zona 7 sai dela; o motor marca a anomalia e ordena as prioridades, e o LLM recebe apenas a evidência para narrar."></picture>
+﻿<picture><source media="(max-width: 600px)" srcset="https://github.com/danielsouzaa7/pulse-marketplace-decision-intelligence/raw/main/docs/assets/pulse-mobile.svg"><img src="docs/assets/pulse.svg" width="100%" alt="Pulse: a média da empresa fica dentro da faixa esperada enquanto a zona 7 sai dela; o motor detecta, diagnostica, estima impacto, prioriza e monta a evidência — e só depois dessa fronteira o modelo de linguagem escreve a explicação."></picture>
 
 # PULSE — Marketplace Decision Intelligence
 

@@ -1,114 +1,144 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-labelledby="t d">
-  <title id="t">Pulse — Marketplace Decision Intelligence</title>
-  <desc id="d">A média da empresa permanece dentro da faixa esperada enquanto a zona 7 sai dela. O motor varre as séries, marca a anomalia e ordena as prioridades: zona 7, toda a empresa, zona 4. O modelo de linguagem recebe apenas a evidência e narra; quem decide é o motor. Dados sintéticos.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 440" width="840" height="440" role="img" aria-labelledby="t d">
+  <title id="t">Pulse — o motor calcula, o modelo explica</title>
+  <desc id="d">A média da empresa fica dentro da faixa esperada enquanto a zona 7 sai dela. O motor detecta, diagnostica, estima impacto, prioriza e monta a evidência. Só depois dessa fronteira o modelo de linguagem recebe a evidência e escreve a explicação. Dados sintéticos.</desc>
   <style>
     .f { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-    .brand { font-size: 24px; font-weight: 700; fill: #E6EDF7; letter-spacing: -.3px; }
-    .rule  { font-size: 18px; font-weight: 500; fill: #9FB0C8; }
-    .chip  { font-size: 19px; font-weight: 600; fill: #E6EDF7; }
-    .num   { font-size: 19px; font-weight: 700; fill: #4C7DFF; }
-    .small { font-size: 15px; fill: #6F83A3; }
-    .leg   { font-size: 17px; fill: #9FB0C8; }
-    .llm   { font-size: 18px; font-weight: 600; fill: #D2B8FF; }
-    .alert { font-size: 17px; font-weight: 600; fill: #F85149; }
+    .brand { font-size: 23px; font-weight: 700; fill: #E6EDF7; letter-spacing: -.3px; }
+    .rule  { font-size: 17px; font-weight: 500; fill: #9FB0C8; }
+    .chip  { font-size: 18px; font-weight: 600; fill: #E6EDF7; }
+    .num   { font-size: 18px; font-weight: 700; fill: #4C7DFF; }
+    .small { font-size: 14px; fill: #6F83A3; }
+    .leg   { font-size: 15px; fill: #9FB0C8; }
+    .alert { font-size: 16px; font-weight: 600; fill: #F85149; }
+    .stg   { font-size: 14px; font-weight: 600; fill: #9FB0C8; }
+    .stgv  { font-size: 14px; font-weight: 600; fill: #BC8CFF; }
 
-    .anim { animation-duration: 10s; animation-iteration-count: infinite; animation-timing-function: linear; }
+    /* 12s: varredura, prioridade, e só então a narração. */
+    .anim { animation-duration: 12s; animation-iteration-count: infinite; animation-timing-function: linear; }
     .ping { transform-box: fill-box; transform-origin: center; }
-    .cover   { animation-name: cover; }
-    .scan    { animation-name: scan; }
-    .lines   { animation-name: lines; }
-    .mark    { animation-name: mark; }
-    .markp   { animation-name: markp; }
-    .c1 { animation-name: c1; } .c2 { animation-name: c2; } .c3 { animation-name: c3; }
-    .ev  { animation-name: ev; }
-    .box { animation-name: box; }
+    .cover { animation-name: cover; } .scan { animation-name: scan; }
+    .mark { animation-name: mark; } .markp { animation-name: markp; }
+    .c1 { animation-name: c1; } .c2 { animation-name: c2; } .c3 { animation-name: c3; } .cap { animation-name: cap; }
+    .rail { animation-name: rail; } .tint { animation-name: tint; }
+    .g1 { animation-name: g1; } .g2 { animation-name: g2; } .g3 { animation-name: g3; } .g4 { animation-name: g4; }
+    .g5 { animation-name: g5; } .g6 { animation-name: g6; } .g7 { animation-name: g7; } .g8 { animation-name: g8; }
 
-    /* a varredura revela as séries: o motor olha toda métrica em todo escopo */
-    @keyframes cover { 0% { transform: translateX(0); opacity: 1; } 42% { transform: translateX(424px); opacity: 1; } 42.1%, 100% { transform: translateX(424px); opacity: 0; } }
-    @keyframes scan  { 0% { transform: translateX(0); opacity: 1; } 42% { transform: translateX(420px); opacity: 1; } 44%, 100% { transform: translateX(420px); opacity: 0; } }
-    @keyframes lines { 0%, 94% { opacity: 1; } 100% { opacity: 0; } }
-    @keyframes mark  { 0%, 35.9% { opacity: 0; } 36%, 94% { opacity: 1; } 100% { opacity: 0; } }
-    @keyframes markp { 0%, 35.9% { opacity: 0; transform: scale(1); } 36% { opacity: .9; transform: scale(1); } 46%, 100% { opacity: 0; transform: scale(3); } }
-    @keyframes c1 { 0%, 45.9% { opacity: 0; transform: translateY(8px); } 48%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
-    @keyframes c2 { 0%, 49.9% { opacity: 0; transform: translateY(8px); } 52%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
-    @keyframes c3 { 0%, 53.9% { opacity: 0; transform: translateY(8px); } 56%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
-    @keyframes ev  { 0%, 61.9% { opacity: 0; stroke-dashoffset: 0; } 62% { opacity: 1; } 94% { opacity: 1; stroke-dashoffset: -60; } 100% { opacity: 0; stroke-dashoffset: -64; } }
-    @keyframes box { 0%, 65.9% { opacity: 0; } 68%, 94% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes cover { 0% { transform: translateX(0); opacity: 1; } 30% { transform: translateX(366px); opacity: 1; } 30.1%, 100% { transform: translateX(366px); opacity: 0; } }
+    @keyframes scan  { 0% { transform: translateX(0); opacity: 1; } 30% { transform: translateX(360px); opacity: 1; } 32%, 100% { transform: translateX(360px); opacity: 0; } }
+    @keyframes mark  { 0%, 25.9% { opacity: 0; } 26%, 94% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes markp { 0%, 25.9% { opacity: 0; transform: scale(1); } 26% { opacity: .9; transform: scale(1); } 36%, 100% { opacity: 0; transform: scale(3); } }
+    @keyframes c1 { 0%, 33% { opacity: 0; transform: translateY(8px); } 36%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
+    @keyframes c2 { 0%, 36% { opacity: 0; transform: translateY(8px); } 39%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
+    @keyframes c3 { 0%, 39% { opacity: 0; transform: translateY(8px); } 42%, 94% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; } }
+    @keyframes cap { 0%, 43% { opacity: 0; } 46%, 94% { opacity: 1; } 100% { opacity: 0; } }
 
-    @media (prefers-reduced-motion: reduce) {
-      .anim { animation: none !important; }
-      .moving { display: none; }
+    /* o sinal percorre o motor e só atravessa a fronteira no fim */
+    @keyframes rail {
+      0%, 46% { transform: translateX(0); opacity: 0; } 48% { opacity: 1; }
+      52% { transform: translateX(103px); } 56% { transform: translateX(206px); } 60% { transform: translateX(309px); }
+      64% { transform: translateX(411px); } 68% { transform: translateX(514px); } 76% { transform: translateX(617px); }
+      82% { transform: translateX(720px); opacity: 1; } 88%, 100% { transform: translateX(720px); opacity: 0; }
     }
-  </style>
+    @keyframes tint { 0%, 71.9% { fill: #4C7DFF; } 72%, 100% { fill: #A371F7; } }
+    @keyframes g1 { 0%, 47% { opacity: .3; } 49%, 94% { opacity: 1; } 100% { opacity: .3; } }
+    @keyframes g2 { 0%, 51% { opacity: .3; } 53%, 94% { opacity: 1; } 100% { opacity: .3; } }
+    @keyframes g3 { 0%, 55% { opacity: .3; } 57%, 94% { opacity: 1; } 100% { opacity: .3; } }
+    @keyframes g4 { 0%, 59% { opacity: .3; } 61%, 94% { opacity: 1; } 100% { opacity: .3; } }
+    @keyframes g5 { 0%, 63% { opacity: .3; } 65%, 94% { opacity: 1; } 100% { opacity: .3; } }
+    @keyframes g6 { 0%, 67% { opacity: .3; } 69%, 94% { opacity: 1; } 100% { opacity: .3; } }
+    @keyframes g7 { 0%, 75% { opacity: .3; } 77%, 94% { opacity: 1; } 100% { opacity: .3; } }
+    @keyframes g8 { 0%, 81% { opacity: .3; } 83%, 94% { opacity: 1; } 100% { opacity: .3; } }
 
+    @media (prefers-reduced-motion: reduce) { .anim { animation: none !important; } .moving { display: none; } }
+  </style>
   <defs>
-    <clipPath id="chart"><rect x="30" y="80" width="432" height="184"/></clipPath>
+    <clipPath id="chart2"><rect x="34" y="86" width="374" height="170"/></clipPath>
+    <filter id="s5f" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="4"/></filter>
   </defs>
 
-  <rect x="0.5" y="0.5" width="759" height="329" rx="18" fill="#0B1220" stroke="#1E2A40"/>
+  <rect x="0.5" y="0.5" width="839" height="439" rx="20" fill="#0B1220" stroke="#1E2A40"/>
 
-  <!-- cabeçalho -->
-  <path d="M40 33 L50 43 L40 53 L30 43 Z" fill="#4C7DFF"/>
-  <text class="f brand" x="60" y="52">Pulse</text>
-  <text class="f rule" x="724" y="51" text-anchor="end">O motor decide. O LLM narra.</text>
+  <path d="M44 33 L54 43 L44 53 L34 43 Z" fill="#4C7DFF"/>
+  <text class="f brand" x="64" y="51">Pulse</text>
+  <text class="f rule" x="800" y="50" text-anchor="end">O modelo não decide — explica evidência já calculada.</text>
 
-  <!-- séries (sintéticas) -->
-  <g class="anim lines" fill="none" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
-    <path stroke="#5B6B86" d="M36 158 L66 154 L96 161 L126 156 L156 163 L186 158 L216 162 L246 157 L276 165 L306 161 L336 166 L366 163 L396 169 L426 166 L456 171"/>
-    <path stroke="#E6EDF7" d="M36 146 L66 142 L96 149 L126 144 L156 151 L186 146 L216 152 L246 148 L276 156 L306 164"/>
-    <path stroke="#F85149" d="M306 164 L336 183 L366 199 L396 214 L426 223 L456 231"/>
+  <!-- séries sintéticas: a média some, a zona 7 não -->
+  <g fill="none" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+    <path stroke="#5B6B86" d="M40 168 L70 164 L100 171 L130 166 L160 173 L190 168 L220 172 L250 169 L280 175 L310 172 L340 178 L370 176 L400 180"/>
+    <path stroke="#E6EDF7" d="M40 156 L70 152 L100 159 L130 154 L160 161 L190 156 L220 162 L250 158 L280 166 L310 174"/>
+    <path stroke="#F85149" d="M310 174 L340 194 L370 210 L400 222"/>
+  </g>
+  <g clip-path="url(#chart2)" class="moving">
+    <rect class="anim cover" x="40" y="86" width="368" height="170" fill="#0B1220" opacity="0"/>
   </g>
 
-  <!-- a varredura cobre e revela as séries -->
-  <g clip-path="url(#chart)" class="moving">
-    <rect class="anim cover" x="36" y="80" width="426" height="184" fill="#0B1220" opacity="0"/>
-  </g>
-
-  <!-- faixa esperada (linha de base ± limiar) -->
-  <rect x="36" y="128" width="420" height="64" fill="#4C7DFF" fill-opacity=".08"/>
+  <rect x="40" y="130" width="360" height="56" fill="#4C7DFF" fill-opacity=".08"/>
   <g stroke="#4C7DFF" stroke-opacity=".4" stroke-dasharray="4 5">
-    <line x1="36" y1="128" x2="456" y2="128"/>
-    <line x1="36" y1="192" x2="456" y2="192"/>
+    <line x1="40" y1="130" x2="400" y2="130"/><line x1="40" y1="186" x2="400" y2="186"/>
   </g>
-  <text class="f small" x="40" y="118">faixa esperada</text>
+  <text class="f small" x="42" y="122">faixa esperada</text>
 
-  <g class="moving">
-    <line class="anim scan" x1="36" y1="84" x2="36" y2="258" stroke="#4C7DFF" stroke-width="2" opacity="0"/>
-  </g>
+  <g class="moving"><line class="anim scan" x1="40" y1="90" x2="40" y2="252" stroke="#4C7DFF" stroke-width="2" opacity="0"/></g>
 
-  <!-- anomalia: a zona 7 sai da faixa que a média nunca deixa -->
   <g class="anim mark">
-    <circle cx="396" cy="214" r="6" fill="#F85149"/>
-    <circle cx="396" cy="214" r="12" fill="none" stroke="#F85149" stroke-width="2"/>
-    <text class="f alert" x="380" y="248" text-anchor="end">anomalia</text>
+    <circle cx="370" cy="210" r="6" fill="#F85149"/>
+    <circle cx="370" cy="210" r="12" fill="none" stroke="#F85149" stroke-width="2"/>
+    <text class="f alert" x="356" y="243" text-anchor="end">anomalia · zona 7</text>
   </g>
-  <circle class="anim markp ping moving" cx="396" cy="214" r="12" fill="none" stroke="#F85149" stroke-width="2" opacity="0"/>
+  <circle class="anim markp ping moving" cx="370" cy="210" r="12" fill="none" stroke="#F85149" stroke-width="2" opacity="0"/>
 
-  <!-- prioridades, na ordem do motor -->
+  <line x1="40" y1="268" x2="58" y2="268" stroke="#5B6B86" stroke-width="3" stroke-linecap="round"/>
+  <text class="f leg" x="64" y="273">média da empresa</text>
+  <line x1="208" y1="268" x2="226" y2="268" stroke="#E6EDF7" stroke-width="3" stroke-linecap="round"/>
+  <text class="f leg" x="232" y="273">zona 7</text>
+  <text class="f small" x="400" y="273" text-anchor="end">dados sintéticos</text>
+
+  <!-- o que o motor classificou -->
   <g class="anim c1">
-    <rect x="492" y="86" width="232" height="42" rx="10" fill="#131C2E" stroke="#4C7DFF" stroke-width="1.5"/>
-    <text class="f num" x="512" y="114">1</text><text class="f chip" x="538" y="114">Zona 7</text>
+    <rect x="452" y="92" width="348" height="40" rx="10" fill="#131C2E" stroke="#4C7DFF" stroke-width="1.5"/>
+    <text class="f num" x="472" y="118">1</text><text class="f chip" x="496" y="118">Zona 7</text>
   </g>
   <g class="anim c2">
-    <rect x="492" y="138" width="232" height="42" rx="10" fill="#131C2E" stroke="#25324A" stroke-width="1.5"/>
-    <text class="f num" x="512" y="166">2</text><text class="f chip" x="538" y="166">Toda a empresa</text>
+    <rect x="452" y="140" width="348" height="40" rx="10" fill="#131C2E" stroke="#25324A" stroke-width="1.5"/>
+    <text class="f num" x="472" y="166">2</text><text class="f chip" x="496" y="166">Toda a empresa</text>
   </g>
   <g class="anim c3">
-    <rect x="492" y="190" width="232" height="42" rx="10" fill="#131C2E" stroke="#25324A" stroke-width="1.5"/>
-    <text class="f num" x="512" y="218">3</text><text class="f chip" x="538" y="218">Zona 4</text>
+    <rect x="452" y="188" width="348" height="40" rx="10" fill="#131C2E" stroke="#25324A" stroke-width="1.5"/>
+    <text class="f num" x="472" y="214">3</text><text class="f chip" x="496" y="214">Zona 4</text>
+  </g>
+  <text class="anim cap f small" x="452" y="252">3 prioridades · 12 anomalias no escopo</text>
+
+  <!-- o motor, etapa por etapa — e a fronteira antes do modelo -->
+  <line x1="60" y1="340" x2="780" y2="340" stroke="#25324A" stroke-width="2"/>
+  <line x1="625" y1="308" x2="625" y2="392" stroke="#A371F7" stroke-opacity=".6" stroke-width="2" stroke-dasharray="5 5"/>
+  <text class="f stgv" x="625" y="300" text-anchor="middle">fronteira</text>
+
+  <g fill="#4C7DFF">
+    <circle class="anim g2" cx="163" cy="340" r="9"/><circle class="anim g3" cx="266" cy="340" r="9"/>
+    <circle class="anim g4" cx="369" cy="340" r="9"/><circle class="anim g5" cx="471" cy="340" r="9"/>
+  </g>
+  <circle class="anim g1" cx="60"  cy="340" r="9" fill="#39C5CF"/>
+  <circle class="anim g6" cx="574" cy="340" r="9" fill="#3FB950"/>
+  <circle class="anim g7" cx="677" cy="340" r="9" fill="#A371F7"/>
+  <circle class="anim g8" cx="780" cy="340" r="9" fill="#A371F7"/>
+
+  <g class="f stg" text-anchor="middle">
+    <text x="60"  y="378">dados</text>
+    <text x="163" y="378">detecção</text>
+    <text x="266" y="378">diagnóstico</text>
+    <text x="369" y="378">impacto</text>
+    <text x="471" y="378">prioridade</text>
+    <text x="574" y="378">evidência</text>
+  </g>
+  <g class="f stgv" text-anchor="middle">
+    <text x="677" y="378">LLM</text>
+    <text x="780" y="378">explicação</text>
   </g>
 
-  <!-- só a evidência atravessa a fronteira até o modelo -->
-  <line class="anim ev" x1="608" y1="232" x2="608" y2="256" stroke="#A371F7" stroke-width="2" stroke-dasharray="4 4"/>
-  <g class="anim box">
-    <rect x="492" y="256" width="232" height="46" rx="10" fill="#141026" stroke="#A371F7" stroke-width="1.5" stroke-dasharray="5 5"/>
-    <text class="f llm" x="608" y="285" text-anchor="middle">LLM narra a evidência</text>
+  <g class="moving">
+    <g class="anim rail">
+      <circle class="anim tint" cx="60" cy="340" r="6" filter="url(#s5f)" opacity=".75"/>
+      <circle cx="60" cy="340" r="4" fill="#F0F6FC"/>
+    </g>
   </g>
-
-  <!-- legenda -->
-  <line x1="36" y1="296" x2="58" y2="296" stroke="#5B6B86" stroke-width="3" stroke-linecap="round"/>
-  <text class="f leg" x="66" y="302">média da empresa</text>
-  <line x1="236" y1="296" x2="258" y2="296" stroke="#E6EDF7" stroke-width="3" stroke-linecap="round"/>
-  <text class="f leg" x="266" y="302">zona 7</text>
-  <text class="f small" x="456" y="302" text-anchor="end">dados sintéticos</text>
 </svg>
